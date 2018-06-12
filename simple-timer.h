@@ -19,7 +19,7 @@ public:
     running_ = true;
   }
   
-  template<typename U = long, typename T = std::milli> std::chrono::duration<U,T> elapsed() {
+  template<typename T = std::milli, typename U = long> std::chrono::duration<U,T> elapsed() {
     if (running_) {
       auto n = std::chrono::steady_clock::now();
       lap_.push_back(n);
@@ -28,7 +28,7 @@ public:
     return std::chrono::duration<U,T>(0);
   }
   
-  template<typename U = long, typename T = std::milli> std::chrono::duration<U,T> lap() {
+  template<typename T = std::milli, typename U = long> std::chrono::duration<U,T> lap() {
     if (running_) {
       auto n = std::chrono::steady_clock::now();
       auto ret = std::chrono::duration_cast<std::chrono::duration<U,T>>(n - lap_.back());
