@@ -1,6 +1,6 @@
-
-
 #!/bin/bash
+
+uname=$(uname)
 
 endpoint=""
 reportfile=arangodinspect.json
@@ -26,12 +26,16 @@ else
     echo "Inspecting non-encrypted cluster instance $endpoint "
 fi
 
-instance=$(echo -n $(echo $endpoint | md5sum | awk {'print $1'}))
+if [ $uname = "Linux" ]; then
+    instance=$(echo -n $(echo $endpoint | md5sum | awk {'print $1'}))
+elif [ $uname = "Darwin" ]; then 
+    instance=$(echo -n $(echo $endpoint | md5))
+fi
+
 prefix=/tmp/arangoinspect-$instance
 
-
 if [ ! -z $secfile ]; then 
-    response=$(curl -sH "$authstr" --write-out %{http_code} --silent --output $prefix-version.json $endpoint/_api/version?details=true)
+    response=$(curl -sH "$authstr" --write-out %{http_code} --silent -o $prefix-version.json $endpoint/_api/version?details=true)
     if  [ $response != 200 ]; then
         echo "  ... authentication failure."
         exit 1
@@ -68,10 +72,24 @@ fi
 
 uptime > $prefix-uptime.txt
 uname -a > $prefix-uname.txt
-cat /etc/*-release > $prefix-release.txt
-dmesg > $prefix-dmesg.txt
-/sbin/ip addr > $prefix-ip.txt
-cat /proc/meminfo > $prefix-meminfo.txt
+if [ $uname = "Linux" ]; then
+    cat /etc/*-release > $prefix-release.txt
+elif [ $uname = "Darwin" ]; then
+    sw_vers > $prefix-release.txt
+fi
+if [ $uname = "Linux" ]; then
+    dmesg > $prefix-dmesg.txt
+fi
+if [ $uname = "Linux" ]; then
+    /sbin/ip addr > $prefix-ip.txt
+elif [ $uname = "Darwin" ]; then
+    ifconfig > $prefix-ip.txt
+fi
+if [ $uname = "Linux" ]; then
+    cat /proc/meminfo > $prefix-meminfo.txt
+elif [ $uname = "Darwin" ]; then
+    vm_stat > $prefix-meminfo.txt
+fi
 df -h > $prefix-df.txt
 date -u "+%Y-%m-%d %H:%M:%S %Z" > $prefix-date.txt
 report=$instancetype-$(hostname)-$instance.tgz
