@@ -1,5 +1,14 @@
 #!/bin/bash
 
+jq 2&>1 /dev/null
+if [ $? -ne 0 ]; then
+    "**Error** - jq: command not found. Please install jq to proceed"
+fi
+jwtgen -- help 2&>1 /dev/null
+if [ $? -ne 0 ]; then
+    "**Error** - jwtgen: command not found. Please install npm and jwtgen to proceed"
+fi
+
 uname=$(uname)
 
 endpoint=""
@@ -34,7 +43,8 @@ fi
 
 prefix=/tmp/arangoinspect-$instance
 
-if [ ! -z $secfile ]; then 
+if [ -z $secfile ]; then
+    echo 'curl -sH "$authstr" --write-out %{http_code} --silent -o $prefix-version.json $endpoint/_api/version?details=true'
     response=$(curl -sH "$authstr" --write-out %{http_code} --silent -o $prefix-version.json $endpoint/_api/version?details=true)
     if  [ $response != 200 ]; then
         echo "  ... authentication failure."
