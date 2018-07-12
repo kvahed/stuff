@@ -1,10 +1,16 @@
 #!/bin/bash
 
+if [ $uname = "Linux" ]; then
+    instance=$(echo -n $(echo $endpoint | md5sum | awk {'print $1'}))
+elif [ $uname = "Darwin" ]; then 
+    instance=$(echo -n $(echo $endpoint | md5))
+fi
+
 jq 2&>1 /dev/null
 if [ $? -ne 0 ]; then
     "**Error** - jq: command not found. Please install jq to proceed"
 fi
-jwtgen -- help 2&>1 /dev/null
+jwtgen --help 2&>1 /dev/null
 if [ $? -ne 0 ]; then
     "**Error** - jwtgen: command not found. Please install npm and jwtgen to proceed"
 fi
