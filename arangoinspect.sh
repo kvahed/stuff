@@ -8,11 +8,11 @@ elif [ $uname = "Darwin" ]; then
     instance=$(echo -n $(echo $endpoint | md5))
 fi
 
-jq 2&>1 /dev/null
+echo {} | jq . > /dev/null
 if [ $? -ne 0 ]; then
     "**Error** - jq: command not found. Please install jq to proceed"
 fi
-jwtgen --help 2&>1 /dev/null
+jwtgen --help > /dev/null
 if [ $? -ne 0 ]; then
     "**Error** - jwtgen: command not found. Please install npm and jwtgen to proceed"
 fi
@@ -83,6 +83,10 @@ fi
 agent=$(grep -q PRIMARY $prefix-log.json)
 if [ $? -eq 0 ]; then
     instancetype=primary
+fi
+agent=$(grep -q SINGLE $prefix-log.json)
+if [ $? -eq 0 ]; then
+    instancetype=single
 fi
 
 uptime > $prefix-uptime.txt
