@@ -1,5 +1,7 @@
 #!/bin/bash
 
+uname=$(uname)
+
 if [ $uname = "Linux" ]; then
     instance=$(echo -n $(echo $endpoint | md5sum | awk {'print $1'}))
 elif [ $uname = "Darwin" ]; then 
@@ -14,8 +16,6 @@ jwtgen --help 2&>1 /dev/null
 if [ $? -ne 0 ]; then
     "**Error** - jwtgen: command not found. Please install npm and jwtgen to proceed"
 fi
-
-uname=$(uname)
 
 endpoint=""
 reportfile=arangodinspect.json
