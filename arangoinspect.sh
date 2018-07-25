@@ -18,7 +18,6 @@ if [ $? -ne 0 ]; then
 fi
 
 endpoint=""
-reportfile=arangodinspect.json
 
 if [ $# > 2 ] && [ $# == 0 ]; then
     echo "**Error** - usage: arangoinspect.sh [https://]<endpoint> [jwt-secret-file]"
