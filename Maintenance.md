@@ -22,7 +22,7 @@
 * Priority lane for fast actions `feature++`
 
 ## Some experiences ##
-* Accenture test (249 collections, 5000+ indexes):  
+* `<`some generic vendor`>`'s test (249 collections, 5000+ indexes):
 Tests run by support/QA show significant faster run time `16x`
 
 * pokec dataset with 50% out of sync db servers recovers on `c12/c13` i.e. 2x 32 core machine machine significantly faster from restart `~5x` (network maxed out)  
