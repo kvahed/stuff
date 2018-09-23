@@ -1,0 +1,2 @@
+#define school_VERSION_MAJOR @school_VERSION_MAJOR@
+#define school_VERSION_MINOR @school_VERSION_MINOR@

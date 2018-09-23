@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "config.h"
+
 template<typename T> struct vec {
   std::vector<T> _v;
   vec() {
