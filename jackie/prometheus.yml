@@ -27,3 +27,15 @@ scrape_configs:
 
     static_configs:
     - targets: ['localhost:9090']
+
+  - job_name: arangodb-dbserver
+    static_configs:
+    - targets: ['localhost:9101']
+  
+  - job_name: arangodb-agent
+    static_configs:
+    - targets: ['localhost:9102']
+
+  - job_name: arangodb-coordinator
+    static_configs:
+    - targets: ['localhost:9103']
