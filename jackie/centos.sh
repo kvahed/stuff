@@ -1,6 +1,8 @@
 #!/bin/bash
 prometheus_version="2.4.2"
 
+started=$(pwd)
+
 echo "install arangodb exporters"
 cd ~/
 echo "  download and install exporters service"
@@ -61,4 +63,4 @@ sudo wget https://raw.githubusercontent.com/kvahed/stuff/master/jackie/prometheu
 sudo systemctl daemon-reload
 sudo systemctl start prometheus
 
-
+cd ${started}
