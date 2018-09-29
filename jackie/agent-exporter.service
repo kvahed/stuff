@@ -1,0 +1,10 @@
+[Unit]
+Description=ArangoDB Agent Exporter
+After=network.target
+
+[Service]
+PIDFile=/var/run/agent-exporter.pid
+ExecStart=/usr/local/bin/arangodb-exporter --arangodb.endpoint tcp://localhost:8531 --server.address localhost:9103
+
+[Install]
+WantedBy=multi-user.target

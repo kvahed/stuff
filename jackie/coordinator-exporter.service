@@ -1,0 +1,10 @@
+[Unit]
+Description=ArangoDB Coordinator Exporter
+After=network.target
+
+[Service]
+PIDFile=/var/run/coordinator-exporter.pid
+ExecStart=/usr/local/bin/arangodb-exporter --arangodb.endpoint tcp://localhost:8529 --server.address localhost:9101
+
+[Install]
+WantedBy=multi-user.target
