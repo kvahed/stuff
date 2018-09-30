@@ -57,10 +57,11 @@ echo "  configure prometheus"
 cd /etc/prometheus
 wget https://raw.githubusercontent.com/kvahed/stuff/master/jackie/prometheus.yml
 
-echo "install / enable / start prometheus service"
+echo "  install / enable / start prometheus service"
 cd /etc/systemd/system
 sudo wget https://raw.githubusercontent.com/kvahed/stuff/master/jackie/prometheus.service
 sudo systemctl daemon-reload
 sudo systemctl start prometheus
 
 cd ${started}
+echo
