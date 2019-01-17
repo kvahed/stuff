@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  agent-0:
+    image: arangodb
+    expose:
+      - 8529
+    environment:
+      - ARANGO_NO_AUTH=1 
+    networks:
+      agency:
+        ipv4_address: 172.16.1.2
+    command: "arangod --agency.activate true --agency.wait-for-sync false --server.endpoint tcp://0.0.0.0:8529 --agency.size 3 --agency.my-address tcp://172.16.1.2:8529"
+  agent-1:
+    image: arangodb
+    expose:
+      - 8529
+    environment:
+      - ARANGO_NO_AUTH=1
+    networks:
+      agency:
+        ipv4_address: 172.16.1.3
+    command: "arangod --agency.activate true --agency.wait-for-sync false --server.endpoint tcp://0.0.0.0:8529 --agency.size 3 --agency.my-address tcp://172.16.1.3:8529 --agency.endpoint tcp://172.16.1.2:8529"
+  agent-2:
+    image: arangodb
+    expose:
+      - 8529
+    environment:
+      - ARANGO_NO_AUTH=1
+    networks:
+      agency:
+        ipv4_address: 172.16.1.4
+    command: "arangod --agency.activate true --agency.wait-for-sync false --server.endpoint tcp://0.0.0.0:8529 --agency.size 3 --agency.my-address tcp://172.16.1.4:8529 --agency.endpoint tcp://172.16.1.2:8529"
+  client:
+    image: ubuntu:18.04
+    networks:
+      agency:
+        ipv4_address: 172.16.1.5
+    command: sleep 3600
+networks:
+  agency:
+    external: true
