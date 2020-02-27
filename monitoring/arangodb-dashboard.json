@@ -683,6 +683,7 @@
       "targets": [
         {
           "expr": "rate(agency_agent_write_ok[15s])",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -769,6 +770,7 @@
       "targets": [
         {
           "expr": "rocksdb_live_sst_files_size",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -855,6 +857,7 @@
       "targets": [
         {
           "expr": "rate(rocksdb_block_cache_usage[15s])",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -908,7 +911,7 @@
     "list": []
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -939,5 +942,5 @@
   "timezone": "browser",
   "title": "ArangoDB",
   "uid": "MEWD4r4Zz",
-  "version": 18
+  "version": 19
 }
